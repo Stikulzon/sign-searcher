@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "sign-searcher",
+  "version": "${version}",
+
+  "name": "Sign Searcher",
+  "description": "Search the text on nearby signs",
+  "authors": [
+    "Adam Gausmann <agausmann@fastmail.com>"
+  ],
+  "contact": {
+    "sources": "https://github.com/agausmann/sign-searcher"
+  },
+
+  "license": "MIT",
+  "icon": "assets/signsearcher/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [],
+    "client": [
+      "dev.gaussian.signsearcher.SignSearcher"
+    ],
+    "server": [],
+    "cotton-client-commands": [
+      "dev.gaussian.signsearcher.SignSearcher"
+    ]
+  },
+  "mixins": [
+    "signsearcher.minecraft.mixins.json",
+    "signsearcher.sodium.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "sodium": ">=0.3.0"
+  },
+  "breaks": {
+    "optifabric": "*"
+  }
+}
