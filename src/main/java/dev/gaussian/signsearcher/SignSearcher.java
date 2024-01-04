@@ -22,20 +22,19 @@ public class SignSearcher implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		System.out.println("Client init");
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) ->
 		dispatcher.register(ClientCommandManager.literal("signsearch")
 				.then(ClientCommandManager.argument("query", StringArgumentType.greedyString())
 				.executes(context -> {
 							String searchText = StringArgumentType.getString(context, "query");
 							setSearchText(searchText);
-							context.getSource().sendFeedback(Text.literal((String.format("Searching for `%s`...", searchText))));
+							context.getSource().sendFeedback(Text.literal((String.format(Text.translatable("signsearcher.searching").getString(), searchText))));
 							return 1;
 						}
 				))
 				.executes(context -> {
 					setSearchText("");
-					context.getSource().sendFeedback(Text.literal("Cleared search"));
+					context.getSource().sendFeedback(Text.translatable("signsearcher.search_cleared"));
 					return 1;
 				})
 		));
