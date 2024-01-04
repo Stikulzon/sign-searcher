@@ -29,7 +29,7 @@ abstract class SodiumWorldRendererMixin {
             ordinal = 0
         )
     )
-    private static void renderWithOutline(BlockEntityRenderDispatcher dispatcher, BlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vcp, MatrixStack _matrices, BufferBuilderStorage bufferBuilders, Long2ObjectMap<SortedSet<BlockBreakingInfo>> _blockBreakingProgressions, Camera _camera, float _tickDelta) {
+    private static void renderWithOutline(BlockEntityRenderDispatcher dispatcher, BlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vcp, MatrixStack _matrices, BufferBuilderStorage bufferBuilders, Long2ObjectMap<SortedSet<BlockBreakingInfo>> _blockBreakingProgressions, float _tickDelta, VertexConsumerProvider.Immediate immediate, double _x, double _y, double _z, BlockEntityRenderDispatcher _dispatcher, BlockEntity _entity) {
         if (((BlockEntityExt) blockEntity).isGlowing()) {
             OutlineVertexConsumerProvider outlineVcp = bufferBuilders.getOutlineVertexConsumers();
             int color = ((BlockEntityExt) blockEntity).getGlowColor();

@@ -1,13 +1,11 @@
 package dev.gaussian.signsearcher;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.gaussian.signsearcher.event.SignUpdateCallback;
 import dev.gaussian.signsearcher.ext.BlockEntityExt;
 import dev.gaussian.signsearcher.ext.SignBlockEntityExt;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.*;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientBlockEntityEvents;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.text.Text;
@@ -15,11 +13,8 @@ import net.minecraft.text.Text;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.PrimitiveIterator;
-import java.util.function.Supplier;
 
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-
-//import static net.minecraft.server.command.CommandManager.argument;
 
 public class SignSearcher implements ClientModInitializer {
 	private static final HashSet<SignBlockEntity> signs = new HashSet<>();
@@ -37,13 +32,13 @@ public class SignSearcher implements ClientModInitializer {
 							context.getSource().sendFeedback(Text.literal((String.format("Searching for `%s`...", searchText))));
 							return 1;
 						}
-				)
-//				.executes(context -> {
-//					setSearchText("");
-//					context.getSource().sendFeedback(Text.literal("Cleared search"));
-//					return 1;
-//				})
-		)));
+				))
+				.executes(context -> {
+					setSearchText("");
+					context.getSource().sendFeedback(Text.literal("Cleared search"));
+					return 1;
+				})
+		));
 
 		SignUpdateCallback.EVENT.register(SignSearcher::addSign);
 		ClientBlockEntityEvents.BLOCK_ENTITY_UNLOAD.register((blockEntity, world) -> {
@@ -69,6 +64,14 @@ public class SignSearcher implements ClientModInitializer {
 			});
 			signText.append(" ");
 		}
+		for (Text line : ((SignBlockEntityExt) sign).getBackText().getMessages(false)) {
+			line.visit((part) -> {
+				signText.append(part);
+				return Optional.empty();
+			});
+			signText.append(" ");
+		}
+
 		return fuzzyContains(signText.toString(), searchText);
 	}
 
