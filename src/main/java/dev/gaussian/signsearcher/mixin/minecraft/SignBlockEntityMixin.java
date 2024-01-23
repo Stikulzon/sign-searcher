@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class SignBlockEntityMixin implements SignBlockEntityExt {
     @Accessor
     public abstract SignText getFrontText();
+    @Accessor
+    public abstract SignText getBackText();
 
     //public void fromTag(BlockState state, CompoundTag tag)
     @Inject(method = "readNbt", at = @At("RETURN"))
